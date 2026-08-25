@@ -1,6 +1,6 @@
 yaml
 
-name: Build MSVC 2015 Solution
+name: "Build MSVC 2015 Solution"
 
 on:
   push:
