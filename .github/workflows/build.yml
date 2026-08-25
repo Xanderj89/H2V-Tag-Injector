@@ -27,4 +27,4 @@ jobs:
     # Step 4: Build the solution forcing the MSVC 2015 (v140) toolset
     - name: Build Solution
       run: |
-        msbuild your-solution-name.sln /p:Configuration=Release /p:Platform=x64 /
+        msbuild tag_injector.sln /p:Configuration=Release /p:Platform=x64 /
