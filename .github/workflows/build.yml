@@ -1,0 +1,30 @@
+yamlname: Build MSVC 2015 Solution
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # Windows 2019 runner retains better compatibility for legacy build setups
+    runs-on: windows-2019
+
+    steps:
+    # Step 1: Check out the repository source code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Step 2: Add MSBuild to the environment path
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    # Step 3: Restore NuGet dependencies (omit if your project does not use NuGet)
+    - name: Restore NuGet Packages
+      run: nuget restore your-solution-name.sln
+
+    # Step 4: Build the solution forcing the MSVC 2015 (v140) toolset
+    - name: Build Solution
+      run: |
+        msbuild your-solution-name.sln /p:Configuration=Release /p:Platform=x64 /
