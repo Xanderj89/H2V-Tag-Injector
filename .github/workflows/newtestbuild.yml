@@ -1,0 +1,27 @@
+name: Build Tag Injector
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Install VS 2015 Build Tools via Chocolatey
+      run: |
+        choco install visualstudio2015buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.140" -y
+
+    - name: Compile Solution with MSBuild
+      run: |
+        msbuild tag_injector.sln /p:Configuration=Release /p:Platform=x86 /p:PlatformToolset=v140
